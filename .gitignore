@@ -1,0 +1,15 @@
+# Python
+.venv/
+__pycache__/
+*.pyc
+.env
+
+# Data
+data/raw/
+data/cleaned/
+
+# OS
+.DS_Store
+
+# VSCode
+.vscode/.ropeproject

@@ -1,0 +1,22 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Install deps",
+            "type": "shell",
+            "command": "pip install -r requirements.txt",
+            "options": {
+                "env": {
+                    "PIP_DISABLE_PIP_VERSION_CHECK": "1"
+                }
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "Run scraper",
+            "type": "shell",
+            "command": "python run.py",
+            "problemMatcher": []
+        }
+    ]
+}
