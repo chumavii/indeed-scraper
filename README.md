@@ -36,32 +36,26 @@ job-board-scraper/
 ## 🛠️ Setup (Step-by-Step)
 
 1️⃣ Clone the repository
-```bash
 git clone <repo-url>
 cd job-board-scraper
 
 2️⃣ Create a virtual environment
-```bash
 py -3 -m venv .venv
 
 3️⃣ Activate the virtual environment
 PowerShell:
-```bash
 .\.venv\Scripts\Activate.ps1
 
 MacOS/Linux:
 source .venv/bin/activate
 
 4️⃣ Upgrade pip
-```bash
 python -m pip install --upgrade pip
 
 5️⃣ Install dependencies
-```bash
 pip install -r requirements.txt
 
 If you're setting up from scratch:
-```bash
 pip install pandas selenium webdriver-manager python-dotenv
 pip freeze > requirements.txt
 
@@ -74,7 +68,6 @@ PAGES=5
 python run.py
 
 This generates:
-```bash
 data/cleaned/output.csv
 
 ▶️ Usage
