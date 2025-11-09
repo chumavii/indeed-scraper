@@ -1,10 +1,10 @@
-# Job Board Scraper (Python + Selenium + Pandas)
+# Indeed Scraper (Python + Selenium + Pandas)
 
 A lightweight Python scraper that extracts job listings from **Indeed** using Selenium and normalizes the results with **pandas**. Supports multi-page scraping, structured field extraction, and CSV export for downstream analysis.
 
 ------------------------------------------------------------------------
 
-## 🚀 Features
+## Features
 
 -   ✅ Search Indeed by keyword and location\
 -   ✅ Extract job title, company, location, salary, snippet, and URL\
@@ -15,7 +15,7 @@ A lightweight Python scraper that extracts job listings from **Indeed** using Se
 
 ------------------------------------------------------------------------
 
-## 🧱 Project Structure
+## Project Structure
 
     job-board-scraper/
     │
@@ -34,22 +34,22 @@ A lightweight Python scraper that extracts job listings from **Indeed** using Se
 
 ------------------------------------------------------------------------
 
-## 🛠️ Setup (Step-by-Step)
+## Setup (Step-by-Step)
 
-### 1️⃣ Clone the repository
+### 1. Clone the repository
 
 ``` bash
 git clone <repo-url>
 cd job-board-scraper
 ```
 
-### 2️⃣ Create a virtual environment
+### 2. Create a virtual environment
 
 ``` bash
 py -3 -m venv .venv
 ```
 
-### 3️⃣ Activate the virtual environment
+### 3. Activate the virtual environment
 
 PowerShell:
 
@@ -63,13 +63,13 @@ macOS/Linux:
 source .venv/bin/activate
 ```
 
-### 4️⃣ Upgrade pip
+### 4. Upgrade pip
 
 ``` bash
 python -m pip install --upgrade pip
 ```
 
-### 5️⃣ Install dependencies
+### 5. Install dependencies
 
 ``` bash
 pip install -r requirements.txt
@@ -82,13 +82,13 @@ pip install pandas selenium webdriver-manager python-dotenv
 pip freeze > requirements.txt
 ```
 
-### 6️⃣ Create the `.env` file
+### 6. Create the `.env` file
 
     SEARCH_TERM=Python Developer
     LOCATION=Canada
     PAGES=5
 
-### 7️⃣ Run the scraper
+### 7. Run the scraper
 
 ``` bash
 python run.py
@@ -100,7 +100,7 @@ Output will be generated in:
 
 ------------------------------------------------------------------------
 
-## ▶️ Usage
+## Usage
 
 Modify search criteria in `.env`, then simply run:
 
