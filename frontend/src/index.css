@@ -1,0 +1,212 @@
+@import "tailwindcss";
+
+:root {
+  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* App Layout */
+.app-container {
+  @apply min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 flex flex-col;
+}
+
+.app-content {
+  @apply flex-1 flex flex-col items-center justify-center p-8;
+}
+
+.app-wrapper {
+  @apply w-full max-w-6xl mx-auto flex flex-col items-center;
+}
+
+.app-title {
+  @apply text-4xl font-bold mb-8 text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600;
+}
+
+/* Search Form */
+.search-form {
+  @apply bg-white/90 backdrop-blur-sm shadow-2xl rounded-3xl p-8 w-full max-w-2xl mb-8 border border-purple-100/50 transition-all duration-300;
+}
+
+.search-form:hover {
+  @apply shadow-purple-200/50;
+}
+
+.search-form-container {
+  @apply flex flex-col gap-6;
+}
+
+.search-input-wrapper {
+  @apply relative;
+}
+
+.search-input-wrapper:hover .search-input {
+  @apply border-purple-300;
+}
+
+.search-input-icon-container {
+  @apply absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none;
+}
+
+.search-input {
+  @apply w-full pl-12 pr-4 py-4 border-2 border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-400 transition-all duration-200 text-slate-900 placeholder-slate-400 bg-white focus:bg-purple-50/30;
+}
+
+.search-icon {
+  @apply w-5 h-5 text-purple-500;
+}
+
+.location-icon {
+  @apply w-5 h-5 text-purple-500;
+}
+
+.submit-button {
+  @apply w-full bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600 text-white font-semibold px-6 py-4 rounded-xl focus:outline-none focus:ring-4 focus:ring-purple-300 transition-all duration-200 transform shadow-lg flex items-center justify-center gap-2 cursor-pointer;
+}
+
+.submit-button:not(:disabled):hover {
+  @apply from-blue-700 via-purple-700 to-indigo-700 scale-[1.02] shadow-purple-500/50;
+}
+
+.submit-button:not(:disabled):active {
+  @apply scale-[0.98];
+}
+
+.submit-button:disabled {
+  @apply opacity-50 cursor-not-allowed;
+}
+
+.submit-button-icon {
+  @apply w-5 h-5 text-white;
+}
+
+.loading-spinner {
+  @apply animate-spin -ml-1 mr-3 h-5 w-5 text-white;
+}
+
+.loading-spinner-circle {
+  @apply opacity-25;
+}
+
+.loading-spinner-path {
+  @apply opacity-75;
+}
+
+/* Error Message */
+.error-container {
+  @apply bg-red-50 border border-red-200 text-red-800 px-4 py-3 rounded-lg flex items-start gap-3;
+}
+
+.error-icon {
+  @apply w-5 h-5 text-red-600 mt-0.5 flex-shrink-0;
+}
+
+.error-content {
+  @apply flex-1;
+}
+
+.error-title {
+  @apply font-medium;
+}
+
+.error-message {
+  @apply text-sm mt-1;
+}
+
+.error-close-button {
+  @apply text-red-600 transition-colors;
+}
+
+.error-close-button:hover {
+  @apply text-red-800;
+}
+
+.error-close-icon {
+  @apply w-5 h-5;
+}
+
+/* Search Results */
+.results-container {
+  @apply w-full max-w-4xl mx-auto;
+}
+
+.no-results {
+  @apply text-slate-500 text-sm text-center;
+}
+
+.results-table {
+  @apply w-full border-collapse bg-white/90 backdrop-blur-sm shadow-xl rounded-2xl overflow-hidden border border-purple-100/50;
+}
+
+.results-table-header {
+  @apply bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600 text-white;
+}
+
+.results-table-header-cell {
+  @apply p-4 text-left font-semibold;
+}
+
+.results-table-row {
+  @apply border-b border-slate-100 transition-colors duration-150;
+}
+
+.results-table-row:hover {
+  @apply bg-purple-50/50;
+}
+
+.results-table-cell {
+  @apply p-4;
+}
+
+.job-link {
+  @apply text-purple-700 font-medium transition-colors;
+}
+
+.job-link:hover {
+  @apply text-purple-800 underline;
+}
+
+.job-company {
+  @apply text-slate-700;
+}
+
+.job-location {
+  @apply text-slate-600;
+}
+
+.job-salary {
+  @apply text-slate-700 font-medium;
+}
+
+/* Footer */
+.footer {
+  @apply w-full mt-12 py-6 bg-gray-700 border-purple-200/50;
+}
+
+.footer-container {
+  @apply max-w-6xl mx-auto px-8 flex flex-col items-center gap-2;
+}
+
+.footer-text {
+  @apply text-slate-300 text-sm;
+}
+
+.footer-link {
+  @apply text-purple-400 font-medium transition-colors inline-flex items-center gap-1;
+}
+
+.footer-link:hover {
+  @apply text-purple-300 underline;
+}
+
+.footer-link-icon {
+  @apply w-3 h-3;
+}
+
+.footer-copyright {
+  @apply text-slate-400 text-xs;
+}

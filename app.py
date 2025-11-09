@@ -1,5 +1,6 @@
 from fastapi import FastAPI, Query
 from fastapi.responses import JSONResponse
+from fastapi.middleware.cors import CORSMiddleware
 from dotenv import load_dotenv
 from backend.scraper import JobScraper
 from backend.parser import to_dataframe
@@ -11,6 +12,14 @@ app = FastAPI(
     title="Indeed Scraper API",
     description="Scrapes Indeed job listings via Selenium or BeautifulSoup",
     version="1.0.0"
+)
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:5173", "http://127.0.0.1:5173"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"]
 )
 
 @app.get("/")
