@@ -1,9 +1,9 @@
 from fastapi import FastAPI, Query
 from fastapi.responses import JSONResponse
 from dotenv import load_dotenv
-from src.scraper import JobScraper
-from src.parser import to_dataframe
-from src.normalizer import clean_basic
+from backend.scraper import JobScraper
+from backend.parser import to_dataframe
+from backend.normalizer import clean_basic
 
 
 load_dotenv()
