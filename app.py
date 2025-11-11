@@ -1,3 +1,4 @@
+import os
 from fastapi import FastAPI, Query
 from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
@@ -6,9 +7,9 @@ from backend.selenium_scraper import SeleniumJobScraper
 from backend.playwright_scraper import PlaywrightJobScraper
 from backend.parser import to_dataframe
 from backend.normalizer import clean_basic
-import os
 
 
+# --- FastAPI setup ---
 load_dotenv()
 app = FastAPI(
     title="Indeed Scraper API",
@@ -24,6 +25,7 @@ app.add_middleware(
     allow_headers=["*"]
 )
 
+# --- Routes ---
 @app.get("/")
 def home():
     return {"message": "Job Board Scraper API is running", "docs": "/docs"}
@@ -31,22 +33,31 @@ def home():
 @app.get("/api/scrape")
 async def scrape_jobs(
     search: str = Query(..., description="Job title or keyword"),
-    location: str = Query(..., description="Job location")
+    location: str = Query(..., description="Job location"),
+    engine: str = Query("play", description="Scraper engine: play or selenium")
 ):
     try:
+        print(f"Executing with: {engine.upper()}")
         base_url = os.getenv("BASE_URL")
         if not base_url:
             raise ValueError("Base URL is not set")
-
-        scraper = PlaywrightJobScraper()
-        raw_jobs = await scraper.scrape(base_url, search, location)
-        #scraper.close()
+        
+        engine = engine.lower()
+        if engine == "selenium":
+            scraper = SeleniumJobScraper(base_url, search, location)
+            raw_jobs = scraper.scrape()
+            scraper.close()
+        else:
+            scraper = PlaywrightJobScraper()
+            raw_jobs = await scraper.scrape(base_url, search, location)
 
         df = to_dataframe(raw_jobs)
         df = clean_basic(df)
         data = df.to_dict(orient="records")
-        return JSONResponse(content={"count": len(data), "jobs": data})
-    except Exception as e:
-        #scraper.close()
-        return JSONResponse(status_code=500, content={"error": str(e)})
 
+        return JSONResponse(content={"engine": engine, "count": len(data), "jobs": data})
+    except Exception as e:
+        print("Error:", e)
+        if not engine == "play":
+            scraper.close()
+        return JSONResponse(status_code=500, content={"error": str(e)})
