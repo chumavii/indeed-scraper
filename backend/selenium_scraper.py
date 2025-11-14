@@ -71,10 +71,10 @@ class SeleniumJobScraper:
                         "snippet": snippet,
                         "url": url
                     })
-                
+                break
                 if i < self.pages - 1:
-                    print("Going to next page...")
                     start = i * 10
+                    print(f"Going to next page. Start: {start}")
                     current_url = self.driver.current_url
                     target_url = utils.update_start_param(current_url, start)
                     self.human_delay()
