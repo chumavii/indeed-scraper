@@ -34,6 +34,7 @@ def home():
 async def scrape_jobs(
     search: str = Query(..., description="Job title or keyword"),
     location: str = Query(..., description="Job location"),
+    date_range: int = Query(24, description="Filter by hours: 24, 48, 72"),
     engine: str = Query("play", description="Scraper engine: play or selenium")
 ):
     try:
@@ -44,12 +45,12 @@ async def scrape_jobs(
         
         engine = engine.lower()
         if engine == "selenium":
-            scraper = SeleniumJobScraper(base_url, search, location)
+            scraper = SeleniumJobScraper(base_url, search, location, date_range)
             raw_jobs = scraper.scrape()
             scraper.close()
         else:
             scraper = PlaywrightJobScraper()
-            raw_jobs = await scraper.scrape(base_url, search, location)
+            raw_jobs = await scraper.scrape(base_url, search, location, date_range)
 
         df = to_dataframe(raw_jobs)
         df = clean_basic(df)
