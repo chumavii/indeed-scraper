@@ -43,9 +43,8 @@ class PlaywrightJobScraper:
                         title_el = await card.query_selector("h2.jobTitle span")
                         company_el = await card.query_selector("[data-testid='company-name']")
                         location_el = await card.query_selector("[data-testid='text-location']")
-                        salary_el = await card.query_selector("div.jobMetaDataGroup div")
+                        salary_el = await card.query_selector("li[data-testid='attribute_snippet_testid salary-snippet-container']")
                         link_el = await card.query_selector("h2.jobTitle a")
-                        job_description_el = await card.query_selector("div#jobDescriptionText")
 
                         title = await title_el.evaluate("(el) => el.innerText") if title_el else None
                         company = await company_el.evaluate("(el) => el.innerText") if company_el else None
@@ -61,10 +60,10 @@ class PlaywrightJobScraper:
                             "url": job_url
                         })
                     
-                    
+                    break
                     if i < pages - 1:
                         start = (i + 1) * 10
-                        print(f"Updating start param to {start}")
+                        print(f"Going to next page. Start: {start}")
                         current_url = page.url
                         target_url = utils.update_start_param(current_url, start)
                         await asyncio.sleep(random.uniform(2, 4))
