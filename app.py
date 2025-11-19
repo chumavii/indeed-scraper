@@ -1,12 +1,14 @@
 import os
-from fastapi import FastAPI, Query
+from fastapi import FastAPI, Query, HTTPException
 from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi import File, UploadFile
 from dotenv import load_dotenv
 from backend.selenium_scraper import SeleniumJobScraper
 from backend.playwright_scraper import PlaywrightJobScraper
 from backend.parser import to_dataframe
 from backend.normalizer import clean_basic
+from backend.extract_resume_text import extract_resume_text
 
 
 # --- FastAPI setup ---
@@ -24,6 +26,9 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"]
 )
+
+USER_RESUMES = {}
+MAX_RESUME_SIZE = 10 * 1024 * 1024
 
 # --- Routes ---
 @app.get("/")
@@ -60,5 +65,29 @@ async def scrape_jobs(
     except Exception as e:
         print("Error:", e)
         if not engine == "play":
-            scraper.close()
+            scraper.close() # type: ignore
         return JSONResponse(status_code=500, content={"error": str(e)})
+
+@app.post("/api/upload_resume")
+async def upload_resume(file: UploadFile = File(...)):
+    if not file.filename:
+        raise HTTPException(status_code=400, detail="No file uploaded.")
+    
+    if file.size and file.size > MAX_RESUME_SIZE:
+        raise HTTPException(status_code=400, detail="File too large. Max 10MB.")
+    
+    data = await file.read()
+    resume_text = extract_resume_text(file, data)
+
+
+    user_id = "default"
+    USER_RESUMES[user_id] = resume_text
+    print(USER_RESUMES)
+
+    return {
+        "message": "Resume uploaded successfully.",
+        "user_id": user_id,
+        "filename": file.filename,
+        "preview": resume_text[:500] + "..." if len(resume_text) > 500 else resume_text
+        }
+    
