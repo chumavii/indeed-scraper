@@ -13,14 +13,19 @@ class PlaywrightJobScraper:
         
         async with async_playwright() as p:
             print(f"Launching Playwright browser...")    
+
+            #headless is set to False, but headless is forced backend through args
+            #this fingerprint bypasses Cloudflare
             browser = await p.chromium.launch(headless=is_headless, args=[
+                "--headless=new",
+                "--disable-gpu",
                 "--window-size=1920,1080",
                 "--disable-blink-features=AutomationControlled"
             ])
             context = await browser.new_context(
                 viewport={"width":1920, "height":1080},
                 user_agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 \
-                            (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+                            (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
             )
             page = await context.new_page()
 
@@ -31,12 +36,12 @@ class PlaywrightJobScraper:
                     print(f"URL: {target_url}")
                     await page.goto(target_url, wait_until="domcontentloaded")
                     try:
-                        await page.wait_for_selector("td.resultContent", timeout=10000)
+                        await page.wait_for_selector("div.job_seen_beacon", timeout=10000)
                     except:
                         print(f"No job cards found on page {i+1}")
                         break
                                         
-                    cards = await page.query_selector_all("td.resultContent")
+                    cards = await page.query_selector_all("div.job_seen_beacon")
                     print("Cards found:", len(cards))
 
                     for card in cards:
@@ -60,13 +65,16 @@ class PlaywrightJobScraper:
                             "url": job_url
                         })
                     
-                    break
-                    if i < pages - 1:
+                    next_page = i + 2
+                    has_next = await page.query_selector(f"[aria-label='{next_page}']")
+                    if i < pages - 1 and has_next:
                         start = (i + 1) * 10
                         print(f"Going to next page. Start: {start}")
                         current_url = page.url
                         target_url = utils.update_start_param(current_url, start)
                         await asyncio.sleep(random.uniform(2, 4))
+                    else:
+                        break
 
                 except Exception as e:
                     print(e)
