@@ -14,8 +14,8 @@ class PlaywrightJobScraper:
         async with async_playwright() as p:
             print(f"Launching Playwright browser...")    
 
-            #headless is set to False, but headless is forced backend through args
-            #this fingerprint bypasses Cloudflare
+            # headless is set to False, but headless is forced backend through args
+            # this fingerprint bypasses Cloudflare
             browser = await p.chromium.launch(headless=is_headless, args=[
                 "--headless=new",
                 "--disable-gpu",
