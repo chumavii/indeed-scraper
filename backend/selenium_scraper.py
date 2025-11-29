@@ -15,7 +15,7 @@ class SeleniumJobScraper:
         self.base_url = utils.ensure_url_has_scheme(base_url) #ensure url has https:// prefix
         self.search = search
         self.location = location        
-        self.pages = int(os.getenv("PAGES"))
+        self.pages = int(os.getenv("PAGES", "1"))
         self.date_range = date_range
         self.driver = webdriver.Chrome(
             service=Service(ChromeDriverManager().install())            
