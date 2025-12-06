@@ -64,6 +64,10 @@
   @apply w-5 h-5 text-purple-500;
 }
 
+.clock-icon {
+  @apply w-5 h-5 text-purple-500;
+}
+
 .submit-button {
   @apply w-full bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600 text-white font-semibold px-6 py-4 rounded-xl focus:outline-none focus:ring-4 focus:ring-purple-300 transition-all duration-200 transform shadow-lg flex items-center justify-center gap-2 cursor-pointer;
 }
