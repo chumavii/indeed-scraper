@@ -4,18 +4,18 @@ from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi import File, UploadFile
 from dotenv import load_dotenv
-from backend.selenium_scraper import SeleniumJobScraper
-from backend.playwright_scraper import PlaywrightJobScraper
-from backend.parser import to_dataframe
-from backend.normalizer import clean_basic
-from backend.extract_resume_text import extract_resume_text
+from .selenium_scraper import SeleniumJobScraper
+from .playwright_scraper import PlaywrightJobScraper
+from .parser import to_dataframe
+from .normalizer import clean_basic
+from .extract_resume_text import extract_resume_text
 
 
 # --- FastAPI setup ---
 load_dotenv()
 app = FastAPI(
     title="Indeed Scraper API",
-    description="Scrapes Indeed job listings via Selenium or BeautifulSoup",
+    description="Scrapes Indeed job listings using Playwright or Selenium.",
     version="1.0.0"
 )
 
